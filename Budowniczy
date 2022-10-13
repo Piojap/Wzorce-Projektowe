@@ -1,0 +1,130 @@
+
+  public Computer Computer { get; set; }
+  public abstract void BuildMotherboard();
+  public abstract void BuildCPU();
+  public abstract void BuildDisk();
+  public abstract void BuildScreen();
+}
+
+
+public class OfficeComputerBuilder : ComputerBuilder
+{
+
+  public OfficeComputerBuilder(){
+    Computer = new Computer("biurowy");
+  }
+    
+  public override void BuildMotherboard()
+  {
+    Computer.Motherboard = "Asus Prime A320M-E"; 
+    Computer.Price += 259.90;
+  }
+
+  public override void BuildCPU()
+  {
+    Computer.CPU = "AMD Ryzen 5 2600"; 
+    Computer.Price += 589.00;
+  }
+
+  public override void BuildDisk()
+  {
+    Computer.Disk = "Goodram CX400 250 GB SATA3"; 
+    Computer.Price += 149.99;
+  }
+
+  public override void BuildScreen()
+  {
+    Computer.Screen = "BenQ GW2270H (1920x1080)"; 
+    Computer.Price += 369.00;
+  }
+}
+
+public class GamingComputerBuilder : ComputerBuilder
+{
+
+  public GamingComputerBuilder(){
+    Computer = new Computer("gamingowy");
+  }
+    
+  public override void BuildMotherboard()
+  {
+    Computer.Motherboard = "Gigabyte X570 Aorus Elite"; 
+    Computer.Price += 895.60;
+  }
+
+  public override void BuildCPU()
+  {
+    Computer.CPU = "Intel i7 9700K"; 
+    Computer.Price += 1829.00;
+  }
+
+  public override void BuildDisk()
+  {
+    Computer.Disk = "Samsung 970 EVO Plus 2TB M.2"; 
+    Computer.Price += 2028.45;
+  }
+
+  public override void BuildScreen()
+  {
+    Computer.Screen = "HP Z4W65A4 (3840x1600)"; 
+    Computer.Price += 4927.75;
+  }
+  
+}
+
+public class ProComputerBuilder : ComputerBuilder
+{
+
+  public ProComputerBuilder(){
+    Computer = new Computer("dla profesjonalistów");
+  }
+    
+  public override void BuildMotherboard()
+  {
+    Computer.Motherboard = "Supermicro MBD X11DPH"; 
+    Computer.Price += 2755.30;
+  }
+
+  public override void BuildCPU()
+  {
+    Computer.CPU = "Intel Xeon Gold 5120"; 
+    Computer.Price += 7999.00;
+  }
+
+  public override void BuildDisk()
+  {
+    Computer.Disk = "Seagate Skyhawk 14TB 3.5"; 
+    Computer.Price += 2101.75;
+  }
+
+  public override void BuildScreen()
+  {
+    Computer.Screen = "Eizo CG319X (4096x2160)"; 
+    Computer.Price += 20749.00;
+  }
+  
+}
+
+public class Program
+{
+  static void Main(string[] args)
+  {
+    
+    ComputerShop computerShop = new ComputerShop();
+    
+    ComputerBuilder computerBuilder = new OfficeComputerBuilder();
+    computerShop.ConstructComputer(computerBuilder);
+
+    computerBuilder.Computer.DisplayConfiguration();
+
+    ComputerBuilder computerBuilder2 = new GamingComputerBuilder();
+    computerShop.ConstructComputer(computerBuilder2);
+
+    computerBuilder2.Computer.DisplayConfiguration();
+
+    ComputerBuilder computerBuilder3 = new ProComputerBuilder();
+    computerShop.ConstructComputer(computerBuilder3);
+
+    computerBuilder3.Computer.DisplayConfiguration();
+  }
+}
