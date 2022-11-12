@@ -1,0 +1,110 @@
+using System;
+using System.Collections.Generic;
+
+namespace Pylek{
+  
+    public enum Type { LargeTree, Bush, Tree }
+  
+    public interface Plant{
+      void Display(int positionX, int positionY);
+    }
+
+//KRZAK
+    public class Bush : Plant
+    {
+      public string Texture { get; set;}
+
+      public void Display(int x, int y)
+      {
+        Console.WriteLine($"Krzak (plik \"{Texture}\") znajduje się na pozycji {x},{y}\n");
+      }
+    }
+
+//DRZEWO
+    public class Tree : Plant{
+      public string Texture { get; set;}
+
+      public void Display(int x, int y)
+      {
+        Console.WriteLine($"Normalne drzewo (plik \"{Texture}\") znajduje się na pozycji {x},{y}\n");
+      }
+    }
+
+//DUŻE DRZEWO
+    public class LargeTree : Plant{
+      public string Texture { get; set;}
+      
+      public void Display(int x, int y)
+      {
+        Console.WriteLine($"Duże drzewo (plik \"{Texture}\") znajduje się na pozycji {x},{y}\n");
+      }
+    }
+
+//PLANT FACTORY
+    public class PlantFactory
+    {
+      private Dictionary<Type, Plant> Plants = new Dictionary<Type, Plant>();
+
+      public Plant GetPlant(Type type)
+      {
+        Plant plant;
+          
+        if (Plants.ContainsKey(type))
+        {
+          plant = Plants[type];
+          Console.WriteLine($"Wykorzystuję istniejący obiekt");
+        }
+        else
+        {
+          switch (type)
+          {
+            case Type.LargeTree:
+              plant = new LargeTree() { Texture = "large_tree.png" };
+              break;
+            case Type.Bush:
+              plant = new Bush() { Texture = "bush.png" };
+              break;
+            case Type.Tree:
+              plant = new Tree() { Texture = "tree.png" };
+              break;
+            default:
+              plant = null;
+              break;
+          }
+              
+          Plants.Add(type, plant);
+          Console.WriteLine("Tworzę nowy obiekt typu {0}", type);
+        }
+
+          return plant;
+      }
+    }
+  
+    class Program
+    {
+      static void Main(string[] args)
+      {
+        var factory = new PlantFactory();
+
+        var plant = factory.GetPlant(Type.Tree);
+        plant.Display(0,0);
+        plant = factory.GetPlant(Type.LargeTree);
+        plant.Display(0, 7);
+        plant = factory.GetPlant(Type.Tree);
+        plant.Display(3, 16);
+        plant = factory.GetPlant(Type.Bush);
+        plant.Display(10, 9);
+        plant = factory.GetPlant(Type.Tree);
+        plant.Display(7, 7);
+        plant = factory.GetPlant(Type.LargeTree);
+        plant.Display(20, 0);
+        plant = factory.GetPlant(Type.Tree);
+        plant.Display(3, 28);
+        plant = factory.GetPlant(Type.Bush);
+        plant.Display(1, 5);
+        plant = factory.GetPlant(Type.Tree);
+        plant.Display(8, 8);        
+      }
+    }
+
+}
